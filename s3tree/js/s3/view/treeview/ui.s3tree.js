@@ -1,6 +1,9 @@
 goog.provide("s3.view.treeview");
 
 goog.require("s3.view.treeview.TreeView");
+goog.require("downtown.Loader");
+
+downtown.Loader.loadCss("s3/view/treeview/treeview");
 
 (function($, undefined) {
 

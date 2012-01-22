@@ -36,6 +36,10 @@ goog.inherits(s3.view.login.LoginView, Backbone.View);
   s3.view.login.LoginView.prototype.bindEvent = function() {
     var self = this;
     $(this.el).find(".login").click(function(e) {
+      if (self.clicked) {
+        return;
+      }
+      self.clicked = true;
       self.model.accessKey = self.model.accessKey.trim();
       self.model.secretKey = self.model.secretKey.trim();
       self.model.loadBuckets({
@@ -45,6 +49,7 @@ goog.inherits(s3.view.login.LoginView, Backbone.View);
         },
         error : function(req, status) {
           alert("Login Error status:" + status);
+          self.clicked = false;
         }
       });
     });

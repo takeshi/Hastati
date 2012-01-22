@@ -45,7 +45,8 @@ goog.inherits(s3.view.listview.ListView, Backbone.View);
       $(table).dataTable({
         "bScrollInfinite" : true,
         "bScrollCollapse" : true,
-        "sScrollY" : "200px"
+        "sScrollY" : "480px",
+        "iLength" : 30
       });
       self.bindEvent();
     });
@@ -57,7 +58,6 @@ goog.inherits(s3.view.listview.ListView, Backbone.View);
       var key = $(this).attr("key");
       var url = self.s3client.createGetUrl(self.bucket, key);
       window.open(url);
-      // alert(url);
       event.preventDefault();
     });
   };
