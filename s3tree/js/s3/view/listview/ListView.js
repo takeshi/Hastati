@@ -61,7 +61,7 @@ goog.inherits(s3.view.listview.ListView, Backbone.View);
       $(table).dataTable({
         "bScrollInfinite" : true,
         "bScrollCollapse" : true,
-        "sScrollY" : "480px",
+        "sScrollY" : "480px"
       });
       self.bindEvent();
     });

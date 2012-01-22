@@ -16,6 +16,9 @@ s3.model.CommonPrefixes = function(parent, client) {
 
 (function(undefined) {
 
+  /**
+   * @returns {String} directory name.
+   */
   s3.model.CommonPrefixes.prototype.name = function() {
     return this.Prefix.substring(this.parent.Prefix.length,
         this.Prefix.length - 1);

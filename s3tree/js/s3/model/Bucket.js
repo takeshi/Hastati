@@ -12,6 +12,12 @@ s3.model.Bucket = function(client) {
 
 (function($) {
 
+  /**
+   * load Bucket
+   * 
+   * @param {Hash}
+   *            option
+   */
   s3.model.Bucket.prototype.loadBucket = function(option) {
     var self = this;
     this.client.list(this.Name, null, "", "/", {

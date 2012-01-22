@@ -10,6 +10,9 @@ s3.view.S3Router = function(attr) {
   }
 };
 
+/**
+ * Bind EventBus.
+ */
 s3.view.S3Router.prototype.bindEventBus = function() {
   var self = this;
   this.eventBus.bind("prefix_change", function(event, prefix) {
@@ -20,6 +23,11 @@ s3.view.S3Router.prototype.bindEventBus = function() {
     self.changePrefix(event);
   });
 };
+/**
+ * @private
+ * @param {Event}
+ *            event
+ */
 s3.view.S3Router.prototype.changePrefix = function(event) {
   // console.log(event);
   var hash = decodeURIComponent(window.location.hash).split("!");

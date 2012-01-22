@@ -3,12 +3,29 @@ goog.provide("s3.S3");
 goog.require("s3.load");
 
 /**
+ * Utility for Amazon S3.
+ * 
  * @constructor
  */
 s3.S3 = function() {
 };
 
 (function($) {
+  /**
+   * Calculate signature.
+   * 
+   * @param {String}
+   *            key
+   * @param {String}
+   *            method
+   * @param {String}
+   *            resource
+   * @param {Hash}
+   *            headers
+   * @param {String}
+   *            expires
+   * @returns
+   */
   s3.S3.signature = function(key, method, resource, headers, expires) {
     var stringToSign = method + "\n";
     if (headers["x-amz-date"]) {

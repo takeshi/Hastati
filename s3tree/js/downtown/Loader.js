@@ -8,21 +8,33 @@ downtown.Loader = function() {
 
 (function($, settings) {
 
+  /**
+   * load Javascript from basePath.
+   * 
+   * @param src
+   */
   downtown.Loader.loadJs = function(src) {
     src = settings["basePath"] + src + ".js";
     var script = "<script type='text/javascript' src='" + src + "' ></script>";
     document.write(script);
   };
   var loadedHtml = {};
-
+  /**
+   * load html from basePath.
+   * 
+   * @param {String}
+   *            src
+   * @param {Function}
+   *            callback
+   */
   downtown.Loader.loadHtml = function(src, callback) {
     var path = settings["basePath"] + src + ".html";
 
     if (loadedHtml[src]) {
       setTimeout(function() {
-        callback(src)
+        callback(src);
       }, 0);
-      return ;
+      return;
     }
 
     $.ajax({
@@ -36,6 +48,11 @@ downtown.Loader = function() {
       }
     });
   };
+  /**
+   * load stylesheet from basePath.
+   * 
+   * @param src
+   */
   downtown.Loader.loadCss = function(src) {
     var href = settings["basePath"] + src + ".css";
     var link = $("<link/>");
