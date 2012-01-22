@@ -21,14 +21,13 @@ goog.inherits(s3.view.login.LoginView, Backbone.View);
 
   s3.view.login.LoginView.prototype.render = function() {
     var self = this;
-    downtown.Loader.loadHtml("s3/view/login/login", function() {
-      var html = $($.render({}, "s3/view/login/login"));
+    downtown.Loader.loadHtml("s3/view/login/login", function(src) {
+      var html = $($.render({}, src));
       $(self.el).html(html);
       var userJson = localStorage["s3.login.user"];
       if (userJson) {
         self.model = new s3.model.LoginUser(JSON.parse(userJson));
       }
-
       html.link(self.model);
       self.bindEvent();
     });
@@ -37,7 +36,6 @@ goog.inherits(s3.view.login.LoginView, Backbone.View);
   s3.view.login.LoginView.prototype.bindEvent = function() {
     var self = this;
     $(this.el).find(".login").click(function(e) {
-      // alert(JSON.stringify(self.model));
       self.model.accessKey = self.model.accessKey.trim();
       self.model.secretKey = self.model.secretKey.trim();
       self.model.loadBuckets({

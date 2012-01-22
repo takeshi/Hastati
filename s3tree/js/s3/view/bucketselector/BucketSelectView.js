@@ -16,10 +16,8 @@ s3.view.bucketselector.BucketSelectView = function(attr) {
   if (attr.eventBus) {
     this.eventBus = attr.eventBus;
   }
+  this.bindEventBus();
 
-  this.eventBus.bind("buckets_select", function(event, buckets) {
-    self.onselectBucket(buckets);
-  });
 };
 goog.inherits(s3.view.bucketselector.BucketSelectView, Backbone.View);
 
@@ -29,6 +27,14 @@ goog.inherits(s3.view.bucketselector.BucketSelectView, Backbone.View);
     this.model = buckets;
     this.render();
   };
+
+  s3.view.bucketselector.BucketSelectView.prototype.bindEventBus = function() {
+    var self = this;
+    this.eventBus.bind("buckets_select", function(event, buckets) {
+      self.onselectBucket(buckets);
+    });
+  };
+
   s3.view.bucketselector.BucketSelectView.prototype.render = function() {
     var self = this;
     downtown.Loader.loadHtml("s3/view/bucketselector/list", function(src) {
