@@ -16,19 +16,20 @@ downtown.Loader = function() {
   var loadedHtml = {};
 
   downtown.Loader.loadHtml = function(src, callback) {
-    if (loadedHtml[path]) {
-      setTimeout(callback(), 0);
+    var path = settings["basePath"] + src + ".html";
+
+    if (loadedHtml[src]) {
+      setTimeout(callback(src), 0);
     }
 
-    var path = settings["basePath"] + src + ".html";
     $.ajax({
       async : true,
       dataType : "text",
       url : path,
       success : function(data) {
-        loadedHtml[path] = true;
+        loadedHtml[src] = true;
         $.template(src, data);
-        callback(data);
+        callback(src);
       }
     });
   };

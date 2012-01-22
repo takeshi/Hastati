@@ -1,6 +1,7 @@
 goog.provide("s3.view.login.LoginView");
 
 goog.require("downtown.Loader");
+goog.require("downtown.EventBus");
 goog.require("s3.model.LoginUser");
 
 /**
@@ -9,6 +10,10 @@ goog.require("s3.model.LoginUser");
 s3.view.login.LoginView = function(attr) {
   this.model = new s3.model.LoginUser();
   Backbone.View.call(this, attr);
+  this.eventBus = new downtown.EventBus();
+  if (attr.eventBus) {
+    this.eventBus = attr.eventBus;
+  }
 };
 goog.inherits(s3.view.login.LoginView, Backbone.View);
 
@@ -37,7 +42,8 @@ goog.inherits(s3.view.login.LoginView, Backbone.View);
       self.model.secretKey = self.model.secretKey.trim();
       self.model.loadBuckets({
         success : function(buckets) {
-          console.log(buckets);
+          self.eventBus.trigger("buckets_select", buckets);
+          $(self.el).children().remove();
         },
         error : function(req, status) {
           alert("Login Error status:" + status);
