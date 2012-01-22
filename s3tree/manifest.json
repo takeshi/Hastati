@@ -8,5 +8,9 @@
     "launch": {
       "local_path": "main.html"
     }
+  },
+  "icons":{
+  	"128":"img/s3tree.png",
+  	"16":"img/s3tree16.png"
   }
  }

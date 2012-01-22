@@ -32,6 +32,22 @@ goog.inherits(s3.view.listview.ListView, Backbone.View);
         }
       });
     });
+    this.eventBus.bind("from_hash_change", function(event, data) {
+//      console.log(data);
+      var commonPrefix = new s3.model.CommonPrefixes(null, self.s3client);
+      commonPrefix.bucket = data.bucket;
+      commonPrefix.Prefix = data.prefix;
+      commonPrefix.loadBucket({
+        success : function(result) {
+          self.model = result;
+          self.render();
+        },
+        error : function(req, status) {
+          alert("Bucket Load Error " + status);
+        }
+      });
+    });
+
   };
 
   s3.view.listview.ListView.prototype.render = function() {
@@ -46,7 +62,6 @@ goog.inherits(s3.view.listview.ListView, Backbone.View);
         "bScrollInfinite" : true,
         "bScrollCollapse" : true,
         "sScrollY" : "480px",
-        "iLength" : 30
       });
       self.bindEvent();
     });
