@@ -1,13 +1,14 @@
-(function($) {
-  goog.provide("s3.S3");
+goog.provide("s3.S3");
 
-  goog.require("s3.load");
-  
-  /**
-   * @constructor
-   */
-  s3.S3 = function() {
-  };
+goog.require("s3.load");
+
+/**
+ * @constructor
+ */
+s3.S3 = function() {
+};
+
+(function($) {
 
   s3.S3.signature = function(key, method, resource, headers, expires) {
     var stringToSign = method + "\n";
@@ -44,5 +45,5 @@
     var b64_string = base64.encode(h);
     return b64_string;
   };
-  
+
 }(jQuery));

@@ -1,21 +1,25 @@
-goog.provide("s3.client");
+goog.provide("s3.client.S3Client");
 
 goog.require("s3.S3");
+goog.require("s3.model.LoginUser");
+/**
+ * @constructor
+ * @param {s3.model.LoginUser}
+ *            loginUser
+ */
+s3.client.S3Client = function(loginUser) {
+  this.loginUser = loginUser;
+};
+
 (function($) {
-  /**
-   * @constructor
-   */
-  s3.client.S3Client = function(accessKey, secreteKey) {
-    this.accessKey = accessKey;
-    this.secreteKey = secreteKey;
-  };
 
   s3.client.S3Client.prototype.bucketsList = function(options) {
     var date = new Date().toUTCString();
     var resource = "/";
-    var signature = s3.S3.signature(this.secreteKey, "GET", resource, {
-      "x-amz-date" : date
-    });
+    var signature = s3.S3.signature(this.loginUser.secretKey, "GET", resource,
+        {
+          "x-amz-date" : date
+        });
 
     options.url = "https://s3.amazonaws.com";
     options.dataType = "xml";
@@ -29,10 +33,10 @@ goog.require("s3.S3");
     var expire = parseInt((new Date().getTime() + 60000) / 1000);
     key = encodeURIComponent(key);
     var resource = "/" + bucket + "/" + key;
-    var signature = s3.S3.signature(this.secreteKey, "GET", resource, {},
-        expire);
+    var signature = s3.S3.signature(this.loginUser.secretKey, "GET", resource,
+        {}, expire);
     var url = "https://s3.amazonaws.com" + "/" + bucket + "/" + key;
-    var query = "?AWSAccessKeyId=" + this.accessKey;
+    var query = "?AWSAccessKeyId=" + this.loginUser.accessKey;
     query += "&Expires=" + expire;
     query += "&Signature=" + encodeURIComponent(signature);
     return url + query;
@@ -53,9 +57,10 @@ goog.require("s3.S3");
 
     var date = new Date().toUTCString();
     var resource = "/" + bucket + "/" + key;
-    var signature = s3.S3.signature(this.secreteKey, "GET", resource, {
-      "x-amz-date" : date,
-    });
+    var signature = s3.S3.signature(this.loginUser.secretKey, "GET", resource,
+        {
+          "x-amz-date" : date,
+        });
 
     options.url = "https://" + bucket + ".s3.amazonaws.com/" + key;
     options.dataType = "xml";
@@ -82,7 +87,7 @@ goog.require("s3.S3");
     if (!options.headers) {
       options.headers = {};
     }
-    options.headers["Authorization"] = "AWS " + this.accessKey + ":"
+    options.headers["Authorization"] = "AWS " + this.loginUser.accessKey + ":"
         + signature;
     options.headers["x-amz-date"] = date;
   };

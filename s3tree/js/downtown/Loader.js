@@ -10,10 +10,8 @@ downtown.Loader = function() {
 
   downtown.Loader.loadJs = function(src) {
     src = settings["basePath"] + src + ".js";
-    var script = $("<script></script>");
-    script.attr("type", "text/javascript");
-    script.attr("src", src);
-    $("head").append(script);
+    var script = "<script type='text/javascript' src='" + src + "' ></script>";
+    document.write(script);
   };
   var loadedHtml = {};
 

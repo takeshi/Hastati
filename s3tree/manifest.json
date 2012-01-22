@@ -1,6 +1,6 @@
 {
   "name": "S3 Tree",
-  "version": "0.12",
+  "version": "0.20",
   "permissions": [
     "*://*.s3.amazonaws.com/*"
   ], 
@@ -8,9 +8,5 @@
     "launch": {
       "local_path": "main.html"
     }
-  },
-  "icons":{
-  	"128":"s3tree.png",
-  	"16":"s3tree16.png"
   }
  }

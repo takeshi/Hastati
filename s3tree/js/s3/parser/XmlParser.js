@@ -6,20 +6,20 @@ goog.require("s3.model.ListBucketResult");
 goog.require("s3.model.CommonPrefixes");
 goog.require("s3.model.ListAllMyBucketsResult");
 
+/**
+ * @constructor
+ */
+s3.parser.XmlParser = function() {
+};
+
 (function($) {
 
-  /**
-   * @constructor
-   */
-  s3.parser.XmlParser = function() {
-  };
-
   s3.parser.XmlParser.parseListAllMyBucketsResult = function(xml) {
-    var result = new ListAllMyBucketsResult();
+    var result = new s3.model.ListAllMyBucketsResult();
     result.Owner.ID = $(xml).find("Owner > ID").text();
     result.Owner.DisplayName = $(xml).find("Owner > DisplayName").text();
     $(xml).find("Bucket").each(function(i, xml) {
-      var bucket = new Bucket();
+      var bucket = new s3.model.Bucket();
       bucket.CreationDate = $(xml).find("CreateDate").text();
       bucket.Name = $(xml).find("Name").text();
       result.Buckets.push(bucket);
@@ -34,7 +34,7 @@ goog.require("s3.model.ListAllMyBucketsResult");
    * @returns {ListBucketResult}
    */
   s3.parser.XmlParser.parseListBucketResult = function(xml) {
-    var listBucketResult = new ListBucketResult();
+    var listBucketResult = new s3.model.ListBucketResult();
     listBucketResult.Name = $(xml).find("ListBucketResult > Name").text();
     listBucketResult.Prefix = $(xml).find("ListBucketResult > Prefix").text();
     listBucketResult.Marker = $(xml).find("ListBucketResult > Marker").text();
@@ -50,7 +50,7 @@ goog.require("s3.model.ListAllMyBucketsResult");
       listBucketResult.ContentsList.push(conetnts);
     });
     $(xml).find("ListBucketResult > CommonPrefixes").each(function(index, xml) {
-      var prefix = new CommonPrefixes(listBucketResult);
+      var prefix = new s3.model.CommonPrefixes(listBucketResult);
       prefix.Prefix = $(xml).find("Prefix").text();
       listBucketResult.ContentsList.push(prefix);
     });
