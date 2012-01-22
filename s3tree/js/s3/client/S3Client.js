@@ -1,7 +1,7 @@
 goog.provide("s3.client.S3Client");
 
 goog.require("s3.S3");
-goog.require("s3.model.LoginUser");
+
 /**
  * @constructor
  * @param {s3.model.LoginUser}
@@ -59,7 +59,7 @@ s3.client.S3Client = function(loginUser) {
     var resource = "/" + bucket + "/" + key;
     var signature = s3.S3.signature(this.loginUser.secretKey, "GET", resource,
         {
-          "x-amz-date" : date,
+          "x-amz-date" : date
         });
 
     options.url = "https://" + bucket + ".s3.amazonaws.com/" + key;

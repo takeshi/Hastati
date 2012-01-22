@@ -1,6 +1,8 @@
 <div class="s3listview ui-widget">
 	<div class="s3table ui-widget-content">
-		<div> <input value="{{=Prefix}}" style="width:100%"></div>
+		<div>
+			<input value="{{=Prefix}}" style="width: 99%">
+		</div>
 		<table cellpadding="0" cellspacing="0" border="0" class="display"
 			id="example">
 			<thead>
@@ -10,15 +12,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{#each ContentsList}}
-				{{#if !folder }}
-				
+				{{#each ContentsList}} {{#if !folder }}
+
 				<tr>
-					<td><a style="text-decoration:none" href="javascript:(function(){}());" class="fileItem" key="{{=Key}}">{{=name()}}</a></td>
+					<td><a style="text-decoration: none"
+						href="javascript:(function(){}());" class="fileItem"
+						key="{{=Key}}">{{=name()}}</a></td>
 					<td>{{=Size}}</td>
 				</tr>
-				{{/if}}
-				{{/each}}
+				{{/if}} {{/each}}
 			</tbody>
 		</table>
 	</div>

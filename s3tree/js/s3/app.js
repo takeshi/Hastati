@@ -4,6 +4,8 @@ goog.require("s3.load");
 goog.require("downtown.EventBus");
 goog.require("s3.view.login");
 goog.require("s3.view.bucketselector");
+goog.require("s3.view.treeview");
+goog.require("s3.view.listview");
 
 (function($) {
   $(function() {
@@ -12,6 +14,12 @@ goog.require("s3.view.bucketselector");
       eventBus : eventBus
     });
     $('#buckets')["bucketselector"]({
+      eventBus : eventBus
+    });
+    $('#tree')["s3tree"]({
+      eventBus : eventBus
+    });
+    $('#list')["s3list"]({
       eventBus : eventBus
     });
   });

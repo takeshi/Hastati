@@ -14,12 +14,12 @@ s3.parser.XmlParser = function() {
 
 (function($) {
 
-  s3.parser.XmlParser.parseListAllMyBucketsResult = function(xml) {
-    var result = new s3.model.ListAllMyBucketsResult();
+  s3.parser.XmlParser.parseListAllMyBucketsResult = function(xml, client) {
+    var result = new s3.model.ListAllMyBucketsResult(client);
     result.Owner.ID = $(xml).find("Owner > ID").text();
     result.Owner.DisplayName = $(xml).find("Owner > DisplayName").text();
     $(xml).find("Bucket").each(function(i, xml) {
-      var bucket = new s3.model.Bucket();
+      var bucket = new s3.model.Bucket(client);
       bucket.CreationDate = $(xml).find("CreateDate").text();
       bucket.Name = $(xml).find("Name").text();
       result.Buckets.push(bucket);
@@ -33,7 +33,7 @@ s3.parser.XmlParser = function() {
    * @param xml
    * @returns {ListBucketResult}
    */
-  s3.parser.XmlParser.parseListBucketResult = function(xml) {
+  s3.parser.XmlParser.parseListBucketResult = function(xml, client) {
     var listBucketResult = new s3.model.ListBucketResult();
     listBucketResult.Name = $(xml).find("ListBucketResult > Name").text();
     listBucketResult.Prefix = $(xml).find("ListBucketResult > Prefix").text();
@@ -45,12 +45,14 @@ s3.parser.XmlParser = function() {
     listBucketResult.IsTruncated = $(xml)
         .find("ListBucketResult > IsTruncated").text();
 
-    $(xml).find("ListBucketResult > Contents").each(function(index, contents) {
-      var conetnts = XmlParser.parseContents(listBucketResult, contents);
-      listBucketResult.ContentsList.push(conetnts);
-    });
+    $(xml).find("ListBucketResult > Contents").each(
+        function(index, contents) {
+          var conetnts = s3.parser.XmlParser.parseContents(listBucketResult,
+              contents, client);
+          listBucketResult.ContentsList.push(conetnts);
+        });
     $(xml).find("ListBucketResult > CommonPrefixes").each(function(index, xml) {
-      var prefix = new s3.model.CommonPrefixes(listBucketResult);
+      var prefix = new s3.model.CommonPrefixes(listBucketResult, client);
       prefix.Prefix = $(xml).find("Prefix").text();
       listBucketResult.ContentsList.push(prefix);
     });
@@ -65,8 +67,8 @@ s3.parser.XmlParser = function() {
    *            xml
    * @returns {Contents}
    */
-  s3.parser.XmlParser.parseContents = function(listBucketResult, xml) {
-    var contents = new Contents(listBucketResult);
+  s3.parser.XmlParser.parseContents = function(listBucketResult, xml, client) {
+    var contents = new s3.model.Contents(listBucketResult, client);
     contents.Key = $(xml).find("Key").text();
     contents.Date = new Date($(xml).find("Date").text());
     contents.ETag = $(xml).find("ETag").text();

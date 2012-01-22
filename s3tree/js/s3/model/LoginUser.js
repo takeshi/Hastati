@@ -25,7 +25,7 @@ s3.model.LoginUser.prototype.loadBuckets = function(callbacks) {
   client.bucketsList({
     dataType : "xml",
     success : function(xml) {
-      var backetList = s3.parser.XmlParser.parseListAllMyBucketsResult(xml);
+      var backetList = s3.parser.XmlParser.parseListAllMyBucketsResult(xml,client);
       callbacks.success(backetList);
     },
     error : function(request, status) {

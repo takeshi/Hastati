@@ -40,10 +40,18 @@ goog.inherits(s3.view.bucketselector.BucketSelectView, Backbone.View);
     downtown.Loader.loadHtml("s3/view/bucketselector/list", function(src) {
       var html = $($.render(self.model, src));
       html.appendTo(self.el);
+      self.bindEvent();
     });
   };
-  s3.view.bucketselector.BucketSelectView.bingEvent = function() {
-
+  s3.view.bucketselector.BucketSelectView.prototype.bindEvent = function() {
+    var self = this;
+    $(this.el).find(".bucketselect").bind("change", function(event) {
+      var bucketName = $(event.target).find("option:selected").attr("bucket");
+      var bucket = self.model.find(bucketName);
+      if (bucket) {
+        self.eventBus.trigger("bucket_change", bucket);
+      }
+    });
   };
 
 }(jQuery));

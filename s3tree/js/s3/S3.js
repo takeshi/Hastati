@@ -9,7 +9,6 @@ s3.S3 = function() {
 };
 
 (function($) {
-
   s3.S3.signature = function(key, method, resource, headers, expires) {
     var stringToSign = method + "\n";
     if (headers["x-amz-date"]) {

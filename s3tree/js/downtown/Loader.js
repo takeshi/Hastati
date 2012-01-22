@@ -19,7 +19,10 @@ downtown.Loader = function() {
     var path = settings["basePath"] + src + ".html";
 
     if (loadedHtml[src]) {
-      setTimeout(callback(src), 0);
+      setTimeout(function() {
+        callback(src)
+      }, 0);
+      return ;
     }
 
     $.ajax({
