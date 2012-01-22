@@ -1,0 +1,6 @@
+.s3treeview .tree{
+	height: 700px;
+	width:100%;
+	font-size: 10px;
+	overflow: scroll;
+}
